@@ -26,6 +26,7 @@ jobs:
 
   deploy-terraform:
     runs-on: ubuntu-latest
+    needs: build-and-push
 
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
