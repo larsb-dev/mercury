@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "acr${var.project_name}"
+  name                = "acr${var.project_name}-${random_integer.number.id}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
@@ -17,11 +17,11 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_container_group" "aci" {
-  name                = "${var.project_name}-app"
+  name                = "${var.project_name}-app-${random_integer.number.id}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   ip_address_type     = "Public"
-  dns_name_label      = "${var.project_name}-app"
+  dns_name_label      = "${var.project_name}-app-${random_integer.number.id}"
   os_type             = "Linux"
   restart_policy      = "OnFailure"
 
