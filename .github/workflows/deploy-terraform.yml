@@ -1,0 +1,32 @@
+name: Deploy Terraform
+
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  deploy-terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+      - name: Debug
+        run: echo "Client ID is $ARM_CLIENT_ID"
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Apply
+        run: |
+          terraform init -backend-config="prod.tfbackend"
+          terraform plan
+          terraform apply -auto-approve -var="image_tag=${{ github.ref_name }}"
+        working-directory: ./terraform
