@@ -7,7 +7,6 @@ def calc_age(birth_year: int) -> int:
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
-# /?name=John -> Hello, John!
 def index():
     if request.method == "GET":
       data = {
