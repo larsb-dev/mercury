@@ -33,7 +33,7 @@ resource "azurerm_container_group" "aci" {
 
   container {
     name   = "mercury"
-    image  = "${azurerm_container_registry.acr.login_server}/mercury:v1"
+    image  = "${azurerm_container_registry.acr.login_server}/mercury:latest"
     cpu    = "1"
     memory = "1"
 
