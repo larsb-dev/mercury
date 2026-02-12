@@ -20,7 +20,7 @@ jobs:
         - name: Build and push image to ACR
           run: |
             az acr build \
-              --registry acrmercury.azurecr.io \
+              --registry acrmercury58.azurecr.io \
               --image mercury:${{ github.ref_name }} \
               --file Dockerfile .
 
