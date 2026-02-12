@@ -26,6 +26,7 @@ jobs:
 
   terraform-deploy:
     runs-on: ubuntu-latest
+
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -43,5 +44,5 @@ jobs:
       - name: Terraform Apply
         run: |
           terraform init
-          terraform apply -auto-approve -var="image_tag=${{ github.ref_name }}" -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+          terraform apply -auto-approve -var="image_tag=${{ github.ref_name }}""
         working-directory: ./terraform
