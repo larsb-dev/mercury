@@ -43,5 +43,5 @@ jobs:
       - name: Terraform Apply
         run: |
           terraform init
-          terraform apply -auto-approve -var="image_tag=${{ github.ref_name }}"
+          terraform apply -auto-approve -var="image_tag=${{ github.ref_name }}" -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
         working-directory: ./terraform

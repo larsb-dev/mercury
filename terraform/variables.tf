@@ -13,3 +13,9 @@ variable "image_tag" {
   type        = string
   default     = "latest"
 }
+
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  type        = string
+  default     = ""
+}
