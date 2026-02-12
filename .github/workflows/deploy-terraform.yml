@@ -1,30 +1,11 @@
-name: Build and Push to ACR
+name: Deploy Terraform
 
 on:
   push:
     tags:
       - 'v*'
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Build and push image to ACR
-        run: |
-          az acr build \
-            --registry acrmercury.azurecr.io \
-            --image mercury:${{ github.ref_name }} \
-            --file Dockerfile .
-
-  terraform-deploy:
+  deploy-terraform:
     runs-on: ubuntu-latest
 
     env:
@@ -43,6 +24,7 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          terraform init
+          terraform init -backend-config="prod.tfbackend"
+          terraform plan
           terraform apply -auto-approve -var="image_tag=${{ github.ref_name }}""
         working-directory: ./terraform
