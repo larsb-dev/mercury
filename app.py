@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
+from datetime import datetime
 
 def calc_age(birth_year: int) -> int:
-  current_year = 2026
+  current_year =  datetime.now().year
   return current_year - birth_year
 
 app = Flask(__name__)
