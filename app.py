@@ -8,7 +8,6 @@ def calc_age(birth_year: int) -> int:
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
-# comment to see if ci/cd works
 def index():
     if request.method == "GET":
       data = {
