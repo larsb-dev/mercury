@@ -3,26 +3,26 @@ name: Deploy Terraform
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 jobs:
   build-and-push:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-        - name: Azure Login
-          uses: azure/login@v1
-          with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-        - name: Build and push image to ACR
-          run: |
-            az acr build \
-              --registry acrmercury58.azurecr.io \
-              --image mercury:${{ github.ref_name }} \
-              --file Dockerfile .
+      - name: Build and push image to ACR
+        run: |
+          az acr build \
+            --registry ${{ secrets.ACR_NAME }} \
+            --image mercury:${{ github.ref_name }} \
+            --file Dockerfile .
 
   deploy-terraform:
     runs-on: ubuntu-latest
